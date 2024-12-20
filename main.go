@@ -19,6 +19,7 @@ func main() {
 	router.GET("/shows", getShows)
 	router.GET("/shows/:id", showById)
 	router.POST("/shows", addShow)
+	router.PATCH("/shows/:id/rating", updateRating)
 	router.DELETE("/shows/:id", removeShow)
 	router.Run("localhost:8000")
 }

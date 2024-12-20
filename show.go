@@ -62,6 +62,22 @@ func addShow(c *gin.Context) {
 
 }
 
+func updateRating(c *gin.Context) {
+	var s show
+
+	if err := c.ShouldBindJSON(&s); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"message": "invalid input"})
+		return
+	}
+
+	if _, err := DB.Exec("UPDATE shows SET rating = $1 WHERE id = $2", s.Rating, c.Param("id")); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"message": "update failed"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "rating updated"})
+}
+
 func removeShow(c *gin.Context) {
 	id := c.Param("id")
 
